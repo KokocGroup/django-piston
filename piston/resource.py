@@ -85,7 +85,7 @@ class Resource(object):
 
     def form_validation_response(self, e):
         """
-        Method to return form validation error information. 
+        Method to return form validation error information.
         You will probably want to override this in your own
         `Resource` subclass.
         """
@@ -202,17 +202,17 @@ class Resource(object):
 
         status_code = 200
 
-        # If we're looking at a response object which contains non-string
-        # content, then assume we should use the emitter to format that 
-        # content
-        if self._use_emitter(result):
-            status_code = result.status_code
-            # Note: We can't use result.content here because that
-            # method attempts to convert the content into a string
-            # which we don't want.  when
-            # _is_string/_base_content_is_iter is False _container is
-            # the raw data
-            result = result._container
+#        # If we're looking at a response object which contains non-string
+#        # content, then assume we should use the emitter to format that
+#        # content
+#        if self._use_emitter(result):
+#            status_code = result.status_code
+#            # Note: We can't use result.content here because that
+#            # method attempts to convert the content into a string
+#            # which we don't want.  when
+#            # _is_string/_base_content_is_iter is False _container is
+#            # the raw data
+#            result = result._container
 
         srl = emitter(result, typemapper, handler, fields, anonymous)
 
@@ -237,15 +237,15 @@ class Resource(object):
         except HttpStatusCode, e:
             return e.response
 
-    @staticmethod
-    def _use_emitter(result):
-        """True iff result is a HttpResponse and contains non-string content."""
-        if not isinstance(result, HttpResponse):
-            return False
-        elif django.VERSION >= (1, 4):
-            return result._base_content_is_iter
-        else:
-            return not result._is_string
+#    @staticmethod
+#    def _use_emitter(result):
+#        """True iff result is a HttpResponse and contains non-string content."""
+#        if not isinstance(result, HttpResponse):
+#            return False
+#        elif django.VERSION >= (1, 4):
+#            return result._base_content_is_iter
+#        else:
+#            return not result._is_string
 
     @staticmethod
     def cleanup_request(request):
@@ -283,7 +283,7 @@ class Resource(object):
 
     def error_handler(self, e, request, meth, em_format):
         """
-        Override this method to add handling of errors customized for your 
+        Override this method to add handling of errors customized for your
         needs
         """
         if isinstance(e, FormValidationError):
@@ -311,8 +311,8 @@ class Resource(object):
 
         elif isinstance(e, HttpStatusCode):
             return e.response
- 
-        else: 
+
+        else:
             """
             On errors (like code errors), we'd like to be able to
             give crash reports to both admins and also the calling
